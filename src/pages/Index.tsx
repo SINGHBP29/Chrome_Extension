@@ -1,16 +1,24 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { PopupHeader } from "@/components/extension/PopupHeader";
+import { QuickAsk } from "@/components/extension/QuickAsk";
+import { QuickActions } from "@/components/extension/QuickActions";
+import { Notifications } from "@/components/extension/Notifications";
+import { FilterChips } from "@/components/extension/FilterChips";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
-    </div>
+    <main className="flex min-h-screen items-center justify-center bg-secondary/40 p-6 font-sans">
+      {/* Chrome extension popup mock — fixed width to match real popup constraints */}
+      <div className="w-[360px] overflow-hidden rounded-2xl border border-border bg-background shadow-pop">
+        <PopupHeader />
+        <div className="space-y-4 pb-4">
+          <QuickAsk />
+          <QuickActions />
+          <Notifications />
+          <FilterChips />
+        </div>
+      </div>
+    </main>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;
