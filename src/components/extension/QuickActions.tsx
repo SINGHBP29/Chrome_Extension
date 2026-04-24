@@ -1,4 +1,4 @@
-import { Brain, Clock, Briefcase, Globe, LucideIcon } from "lucide-react";
+import { Brain, Clock, LucideIcon } from "lucide-react";
 
 type Action = {
   label: string;
@@ -10,8 +10,6 @@ type Action = {
 const actions: Action[] = [
   { label: "Meeting Intelligence", icon: Brain, url: "https://meetings.internal", tone: "primary" },
   { label: "Submit Timesheet", icon: Clock, url: "https://timesheet.internal", tone: "success" },
-  { label: "Open OpenAir", icon: Briefcase, url: "https://openair.internal", tone: "info" },
-  { label: "Open Fieldglass", icon: Globe, url: "https://fieldglass.internal", tone: "warning" },
 ];
 
 const toneStyles: Record<Action["tone"], string> = {
