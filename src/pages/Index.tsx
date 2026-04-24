@@ -1,8 +1,9 @@
 import { PopupHeader } from "@/components/extension/PopupHeader";
 import { QuickAsk } from "@/components/extension/QuickAsk";
 import { QuickActions } from "@/components/extension/QuickActions";
+import { HRMessages } from "@/components/extension/HRMessages";
 import { Notifications } from "@/components/extension/Notifications";
-import { FilterChips } from "@/components/extension/FilterChips";
+import { Reminders } from "@/components/extension/Reminders";
 
 const Index = () => {
   return (
@@ -13,8 +14,9 @@ const Index = () => {
         <div className="space-y-4 pb-4">
           <QuickAsk />
           <QuickActions />
+          <HRMessages />
           <Notifications />
-          <FilterChips />
+          <Reminders />
         </div>
       </div>
     </main>
