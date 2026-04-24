@@ -57,6 +57,21 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        success: "hsl(var(--success))",
+        warning: "hsl(var(--warning))",
+        info: "hsl(var(--info))",
+        "primary-soft": "hsl(var(--primary-soft))",
+      },
+      backgroundImage: {
+        "gradient-primary": "var(--gradient-primary)",
+      },
+      boxShadow: {
+        soft: "var(--shadow-sm)",
+        pop: "var(--shadow-md)",
+        glow: "var(--shadow-pop)",
+      },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
         lg: "var(--radius)",
