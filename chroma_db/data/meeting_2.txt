@@ -1,0 +1,32 @@
+Date: Apr 15, 2026
+Title: Capstone Ownership and Internship Orientation
+Participants: HR Team, Internship Program Managers, Engineering Mentors
+
+Summary:
+The meeting focused on clarifying capstone ownership, intern onboarding flow, and how project expectations should be explained during orientation.
+
+Discussion Points:
+- Capstone projects are often inherited from prior intern batches.
+- Current confusion exists about who approves project topics.
+- Program managers requested a single ownership matrix for all tracks.
+- Intern orientation deck lacks clarity on technical deliverables.
+- HR requested simpler language for non-engineering stakeholders.
+
+Intern Communication:
+- On day one, interns should receive project context, scope, and success criteria.
+- Ownership and escalation contacts must be listed directly in onboarding mail.
+- Weekly sync schedule should be shared at the start of internship.
+
+Risks:
+- Delayed clarity leads to duplicated work between intern teams.
+- Mentors are spending extra time correcting misunderstood requirements.
+
+Decisions:
+- Publish a capstone ownership document by team and domain.
+- Add a dedicated orientation slide for "project assignment process."
+- Include previous-year examples to reduce ambiguity.
+
+Next Steps:
+- HR to update onboarding communication template.
+- Engineering mentors to submit finalized project ownership list.
+- Program manager to create FAQ for capstone assignment and scope changes.

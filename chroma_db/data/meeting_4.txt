@@ -1,0 +1,76 @@
+Date: Apr 17, 2026
+Title: HR Wellness Initiative - Zumba Program Rollout
+Participants: HR Team, Employees, Engineering Support
+
+Summary:
+HR introduced a workplace wellness initiative with recurring Zumba sessions to improve engagement, reduce stress, and promote team bonding.
+
+Discussion Points:
+- Zumba sessions scheduled twice a week (Tuesday and Friday).
+- Each session duration is 45 minutes.
+- Mode: hybrid participation.
+  - Offline venue: office activity room.
+  - Online mode: Google Meet link.
+- Participation is voluntary but encouraged.
+
+Program Benefits:
+- Better physical activity and employee health.
+- Reduced burnout and stress.
+- Improved collaboration and team morale.
+
+Technical Requirements:
+- Chrome extension popup reminder before each session.
+- Future plan for calendar integration.
+- Potential attendance tracking in later phase.
+
+Feedback Plan:
+- HR to collect feedback after each session.
+- Additional activities proposed: Yoga and Meditation.
+
+Decisions:
+- Zumba rollout begins next week.
+- Reminder feature added to engineering backlog.
+
+Next Steps:
+- HR to finalize instructor contract.
+- Engineering to prototype reminder popup flow.
+- Employees to register for participation.
+Date: April 24, 2026
+Title: HR Wellness Initiative - Zumba Session
+Participants: HR Team, All Employees
+
+Summary:
+The meeting was conducted to introduce a new HR wellness initiative focusing on physical and mental well-being of employees. The initiative includes weekly Zumba sessions and other fitness-related activities to improve engagement, reduce stress, and promote a healthier work culture.
+
+Discussion Points:
+- HR introduced the concept of workplace wellness programs.
+- Zumba sessions will be conducted twice a week (Tuesday and Friday).
+- Each session will be 45 minutes long and conducted by a certified fitness instructor.
+- Participation is voluntary but strongly encouraged.
+- Sessions will be conducted in hybrid mode:
+  - Offline: Office activity room
+  - Online: Google Meet link will be shared
+
+- Benefits discussed:
+  - Improves physical fitness
+  - Reduces stress and burnout
+  - Encourages team bonding
+  - Improves overall productivity
+
+- Technical Integration (Important for your project):
+  - Chrome extension will show pop-up reminders before each session
+  - Calendar integration planned for future phase
+  - Attendance tracking might be added
+
+- Feedback Collection:
+  - HR will collect feedback after each session
+  - Suggestions for other wellness programs (Yoga, Meditation) were discussed
+
+Decisions:
+- Zumba sessions will start from next week
+- Reminder system will be integrated into Chrome extension
+
+Next Steps:
+- HR to finalize instructor
+- Engineering team to build reminder popup feature
+- Employees to register for sessions
