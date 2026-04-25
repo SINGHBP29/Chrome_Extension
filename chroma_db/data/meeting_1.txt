@@ -1,0 +1,35 @@
+Date: Apr 14, 2026
+Title: Rosetta Discussion
+Participants: Rawoof Ahamed Syednoor, Prakhar Sinha, Manish Dahiya
+
+Summary:
+Meeting reviewed capstone project structures and evaluated Rosetta's marginal productivity benefits for internal engineering teams.
+
+Capstone Project Discussion:
+Capstone topics were discussed regarding their origins and presentation to interns. Ownership of project assignments remains uncertain.
+
+Evaluating Rosetta Utility:
+Rosetta serves as an internal branding tool for context management rather than a product for external monetization. Participants concluded that Rosetta offers only marginal incremental productivity benefits over existing coding agents.
+
+Productivity Measurement Challenges:
+Quantifying productivity gains from AI agents remains difficult for the organization. No effective metrics currently exist to measure the impact of adding Rosetta to standard coding workflows.
+
+Decisions:
+- Rosetta external promotion discontinued; the team agreed not to pitch Rosetta externally.
+- Explain capstone ownership using former intern or Pepsi contacts.
+- Share consolidated Rosetta capability document with stakeholders.
+
+Next Steps:
+- [Manish Dahiya] Explain capstone ownership and assignment flow to current interns.
+- [Prakhar Sinha] Share the previous Rosetta document with edits.
+- [Rawoof Ahamed Syednoor] Finalize context on Rosetta MCP capabilities and limits.
+
+Detailed Notes:
+- Initial discussion started from AI-for-children interview examples and shifted to capstone project allocation concerns.
+- Team clarified expectation for Rosetta meeting: identify where Rosetta helps (new users, experienced users, and existing-agent users).
+- Rosetta is primarily used as an MCP-like layer over existing copilots for better context continuity.
+- Context generation in Rosetta is useful but similar benefits may exist in open-source alternatives.
+- Rosetta compared against Kilo Code; consensus was that competitors appear more advanced in some areas.
+- Team debated whether Rosetta meaningfully increases productivity; conclusion: gains exist but are modest.
+- Measuring productivity remains unresolved due to lack of reliable baseline metrics.
+- Final conclusion: no strong evidence yet for significant gains; documentation handoff required.

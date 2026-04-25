@@ -1,0 +1,82 @@
+Date: Apr 19, 2026
+Title: Weekly HR Sync - Intern Program Operations
+Participants: HR Team, Program Managers
+
+Summary:
+Weekly sync reviewed intern program operations including attendance, timesheet discipline, engagement activities, and documentation consistency.
+
+Discussion Points:
+- Timesheet Submission:
+  - Many interns missed weekly submission deadlines.
+  - Team requested stricter tracking and reminder automation.
+- Weekly Meetings:
+  - Attendance quality needs improvement.
+  - Program managers requested pre-meeting notifications.
+- Engagement Activities:
+  - Zumba session introduced as stress-relief activity.
+  - Team-building activities planned monthly.
+- New Joiner Welcome:
+  - HR will introduce new interns with pictures.
+  - Announcement will be posted via internal dashboard.
+- Meeting Notes Documentation:
+  - All meetings must be documented in centralized format.
+  - Retrieval should be easy through semantic search.
+
+Challenges:
+- Inconsistent note quality across teams.
+- Optional sessions have low participation in some cohorts.
+
+Decisions:
+- Chrome extension will support:
+  - Session reminders
+  - Notes popups
+  - Timesheet alerts
+- HR and engineering will jointly review weekly adoption metrics.
+
+Next Steps:
+- Engineering to implement reminder and alert features.
+- HR to monitor attendance and participation trends.
+- Program managers to enforce timesheet compliance checkpoints.
+Date: April 23, 2026
+Title: Weekly HR Sync - Intern Program
+Participants: HR Team, Program Managers
+
+Summary:
+Weekly sync meeting to review intern progress, engagement activities, and upcoming HR initiatives.
+
+Discussion Points:
+- Timesheet Submission:
+  - Many interns are missing weekly submissions
+  - Need to enforce stricter tracking
+  - Chrome extension reminder system proposed
+
+- Weekly Meetings:
+  - Attendance needs improvement
+  - Plan to send automated notifications
+
+- Engagement Activities:
+  - Zumba session introduced
+  - Team-building activities planned
+
+- New Joiner Welcome:
+  - HR will introduce new interns with pictures
+  - Announcement via internal dashboard
+
+- Meeting Notes Documentation:
+  - All meetings must be documented properly
+  - Stored in centralized system
+  - Retrieval should be easy via search
+
+- Challenges:
+  - Lack of consistency in documentation
+  - Poor engagement in optional sessions
+
+Decisions:
+- Chrome extension will handle:
+  - Reminders
+  - Notes popups
+  - Timesheet alerts
+
+Next Steps:
+- Engineering team to implement features
+- HR to monitor participation metrics

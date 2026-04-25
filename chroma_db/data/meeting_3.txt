@@ -1,0 +1,33 @@
+Date: Apr 16, 2026
+Title: Meeting Notes Documentation System - Phase 1 Planning
+Participants: Engineering Team, HR Stakeholders
+
+Summary:
+Team finalized Phase 1 scope for the meeting notes documentation system. The goal is retrieval accuracy using vector search without LLM generation.
+
+Technical Scope:
+- Store meeting notes as plain text files.
+- Chunk notes using RecursiveCharacterTextSplitter.
+- Generate embeddings with sentence-transformers all-MiniLM-L6-v2.
+- Save vectors into ChromaDB persistent storage.
+- Retrieve relevant chunks using semantic search queries.
+
+Out of Scope (Phase 1):
+- No LLM response generation.
+- No API layer.
+- No Chrome extension UI integration in this phase.
+
+Quality Criteria:
+- Relevant chunk should appear in top results for HR queries.
+- Source file and chunk metadata must always be visible.
+- Retrieval must remain fast for interactive terminal testing.
+
+Decisions:
+- Use local paths under chroma_db for data, scripts, and db files.
+- Keep test script interactive so reviewers can try custom queries.
+- Optimize chunking and reranking before Phase 2.
+
+Next Steps:
+- Finalize notes content across meetings 1 to 7.
+- Re-index data after each file update.
+- Validate retrieval with at least 20 practical HR queries.
