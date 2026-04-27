@@ -1,4 +1,6 @@
-import { MessageSquare, Gift, HeartPulse } from "lucide-react";
+import { MessageSquare, Gift, HeartPulse, Clock } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
 
 const messages = [
   {
@@ -15,9 +17,18 @@ const messages = [
     time: "Yesterday",
     tone: "text-[hsl(var(--success))] bg-[hsl(var(--success)/0.12)]",
   },
+  {
+    icon: Clock,
+    title: "Submit Timesheet",
+    description: "Submit your weekly timesheet",
+    time: "Due today",
+    tone: "text-[hsl(var(--warning))] bg-[hsl(var(--warning)/0.15)]",
+  },
 ];
 
 export const HRMessages = () => {
+  const navigate = useNavigate();
+  const { userRole } = useAuth();
   return (
     <section className="px-4">
       <div className="mb-2 flex items-center justify-between">
@@ -35,6 +46,15 @@ export const HRMessages = () => {
           return (
             <button
               key={i}
+              onClick={() => {
+                if (m.title === "Submit Timesheet") {
+                  if (userRole === "user") {
+                    navigate("/timesheet/user");
+                  } else {
+                    navigate("/timesheet/admin");
+                  }
+                }
+              }}
               className="flex w-full items-start gap-2.5 rounded-lg border border-transparent bg-card p-2.5 text-left shadow-soft transition-all hover:border-border hover:bg-secondary/40"
             >
               <span className={`mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg ${m.tone}`}>
