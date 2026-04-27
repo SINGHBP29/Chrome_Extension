@@ -1,12 +1,18 @@
-from orchestrator.config import get_llm
+from langchain_core.tools import tool
 from orchestrator.utils.meeting_store import retrieve_meeting_chunks
 
-def chroma_tool(state):
-    query = state["query"]
+@tool
+def chroma_tool(query: str) -> str:
+    """
+    Search through recent company meeting transcripts and notes for specific topics, discussions, or context.
+    Use this tool when answering questions about meetings, announcements, or general company discussions.
+    """
     chunks = retrieve_meeting_chunks(query, limit=4)
 
+    print(f"\n[Chroma Tool] Query run: '{query}'")
     if not chunks:
-        return {"response": "I don't know."}
+        print("[Chroma Tool] Result: No relevant meeting context found.")
+        return "No relevant meeting context found."
 
     context = "\n\n".join(
         [
@@ -16,19 +22,5 @@ def chroma_tool(state):
         ]
     )
 
-    llm = get_llm()
-
-    prompt = f"""
-    Answer ONLY using the context below.
-    If answer is not present, say "I don't know."
-
-    Context:
-    {context}
-
-    Question:
-    {query}
-    """
-
-    response = llm.invoke(prompt).content
-
-    return {"response": response}
+    print(f"[Chroma Tool] Result:\n{context}")
+    return context

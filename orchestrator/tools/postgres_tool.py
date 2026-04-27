@@ -1,31 +1,22 @@
 import json
-
-from orchestrator.config import get_llm
+from langchain_core.tools import tool
 from orchestrator.utils.db import run_query
 from orchestrator.utils.postgres_queries import build_employee_query
 
-def postgres_tool(state):
-    query = state["query"]
+@tool
+def postgres_tool(query: str) -> str:
+    """
+    Search for employee information in the PostgreSQL database based on natural language queries.
+    Use this tool to find employees by name, department, location, client, designation, or employment type.
+    """
     sql, params = build_employee_query(query)
     rows = run_query(sql, params)
 
+    print(f"\n[Postgres Tool] Query run: '{query}'")
     if not rows:
-        return {"response": "I don't know."}
+        print("[Postgres Tool] Result: No employees found matching the criteria.")
+        return "No employees found matching the criteria."
 
-    llm = get_llm()
-    prompt = f"""
-    You answer employee-related questions using only the SQL result below.
-    If the answer is not present in the SQL result, say "I don't know."
-
-    User question:
-    {query}
-
-    SQL used:
-    {sql}
-
-    SQL result:
-    {json.dumps(rows, indent=2)}
-    """
-
-    response = llm.invoke(prompt).content
-    return {"response": response}
+    result_json = json.dumps(rows, indent=2)
+    print(f"[Postgres Tool] Result:\n{result_json}")
+    return result_json
