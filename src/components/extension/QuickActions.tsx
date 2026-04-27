@@ -1,15 +1,17 @@
 import { Brain, Clock, LucideIcon } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
 
 type Action = {
   label: string;
   icon: LucideIcon;
-  url: string;
+  url?: string;
   tone: "primary" | "success" | "info" | "warning";
 };
 
 const actions: Action[] = [
-  { label: "Meeting Intelligence", icon: Brain, url: "https://meetings.internal", tone: "primary" },
-  { label: "Submit Timesheet", icon: Clock, url: "https://timesheet.internal", tone: "success" },
+  { label: "Meeting Intelligence", icon: Brain, tone: "primary" },
+  { label: "Submit Timesheet", icon: Clock, tone: "success" },
 ];
 
 const toneStyles: Record<Action["tone"], string> = {
@@ -20,6 +22,23 @@ const toneStyles: Record<Action["tone"], string> = {
 };
 
 export const QuickActions = () => {
+  const navigate = useNavigate();
+  const { userRole } = useAuth();
+
+  const handleActionClick = (action: Action) => {
+    if (action.label === "Meeting Intelligence") {
+      navigate("/meeting");
+    } else if (action.label === "Submit Timesheet") {
+      if (userRole === "admin") {
+        navigate("/timesheet/admin");
+      } else {
+        navigate("/timesheet/user");
+      }
+    } else if (action.url) {
+      window.open(action.url, "_blank");
+    }
+  };
+
   return (
     <section className="px-4">
       <h2 className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
@@ -31,7 +50,7 @@ export const QuickActions = () => {
           return (
             <button
               key={action.label}
-              onClick={() => window.open(action.url, "_blank")}
+              onClick={() => handleActionClick(action)}
               className="group flex flex-col items-start gap-2 rounded-xl border border-border bg-card p-2.5 text-left shadow-soft transition-all hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-pop"
             >
               <span

@@ -1,4 +1,5 @@
 import { Sparkles, Settings } from "lucide-react";
+import { RoleSelector } from "@/components/extension/RoleSelector";
 
 export const PopupHeader = () => {
   return (
@@ -16,12 +17,15 @@ export const PopupHeader = () => {
           </p>
         </div>
       </div>
-      <button
-        className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
-        aria-label="Settings"
-      >
-        <Settings className="h-4 w-4" />
-      </button>
+      <div className="flex items-center gap-2">
+        <RoleSelector />
+        <button
+          className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+          aria-label="Settings"
+        >
+          <Settings className="h-4 w-4" />
+        </button>
+      </div>
     </header>
   );
 };
