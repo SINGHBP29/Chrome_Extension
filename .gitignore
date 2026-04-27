@@ -1,7 +1,36 @@
-.DS_Store
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+
+# Python virtual environments
+venv/
 .venv/
+orchestrator/venv/
+orchestrator/.venv/
+
+# Python cache and build files
 __pycache__/
-*.pyc
-.cache/
-.hf_cache/
-chroma_db/db/
+*.py[cod]
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Local databases and vector stores
+*.db
+*.sqlite
+*.sqlite3
+chroma_db/
+orchestrator/chroma_db/
+orchestrator/storage/chroma/
+
+# IDE and OS files
+.DS_Store
+.vscode/
+.idea/
