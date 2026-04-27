@@ -1,30 +1,26 @@
 # Orchestrator
 
-`orchestrator/` is now the single runnable app in this workspace. It routes:
+`orchestrator/` is a LangChain ReAct Agent-powered application. It uses a centralized LLM to intelligently invoke tools to answer questions:
 
-- meeting-note questions to ChromaDB retrieval
-- employee questions to PostgreSQL
-- general chat to Gemini
+- Uses `chroma_tool` for meeting-note questions
+- Uses `postgres_tool` for employee questions
+- Handles general chat organically
 
 ## Project Structure
 
 ```text
 orchestrator/
 ├── config.py
-├── graph.py
+├── agent.py
 ├── main.py
-├── router.py
-├── classifier.py
 ├── data/
 │   └── meeting_notes/
 ├── ingestion/
 │   ├── chroma_ingestion.py
 │   └── postgres_ingestion.py
 ├── tools/
-│   ├── chat.py
 │   ├── chroma_tool.py
-│   ├── postgres_tool.py
-│   └── unknown.py
+│   └── postgres_tool.py
 └── utils/
     ├── db.py
     ├── meeting_store.py
