@@ -1,0 +1,79 @@
+Date: Apr 18, 2026
+Title: Chrome Extension Reminder and Notification UX
+Participants: Product Team, HR Team, Frontend Engineers
+
+Summary:
+This meeting defined reminder behavior and user experience requirements for the Chrome extension that supports HR programs and intern workflows.
+
+Discussion Points:
+- Reminder popups should be concise and actionable.
+- Notification timings: 15 minutes and 5 minutes before event.
+- Users should be able to snooze or dismiss reminders.
+- Event card should include title, date, time, and meeting link.
+- Notifications should avoid interrupting active presentations.
+
+Feature Prioritization:
+- Priority 1: Session reminder popup.
+- Priority 2: Timesheet deadline alert.
+- Priority 3: New joiner announcement card.
+- Priority 4: Digest summary for weekly HR activities.
+
+Accessibility and UX:
+- Ensure readable font size and high-contrast mode.
+- Keep keyboard navigation support for all actions.
+- Avoid dense text; show short preview with "view details."
+
+Decisions:
+- Start with static event feed from meeting notes in Phase 1 demo.
+- Keep analytics and user preference profiles for Phase 2.
+- Use consistent wording for HR message templates.
+
+Next Steps:
+- Frontend to build popup prototype.
+- HR to provide approved notification copy.
+- Product to define acceptance criteria for reminder reliability.
+Date: April 25, 2026
+Title: CTO Interaction with Interns - Upskilling Roadmap
+Participants: CTO, Engineering Mentors, Interns
+
+Summary:
+The CTO conducted a session with newly joined interns to guide them on how to effectively upskill themselves and align with industry expectations.
+
+Discussion Points:
+- Importance of strong fundamentals:
+  - Data Structures & Algorithms
+  - System Design basics
+  - Backend fundamentals (APIs, databases)
+
+- Recommended Tech Stack:
+  - Python / JavaScript
+  - FastAPI / Node.js
+  - React for frontend
+
+- Learning Strategy:
+  - Focus on building real-world projects instead of only theory
+  - Participate in code reviews
+  - Learn debugging and problem-solving
+
+- AI & Future Skills:
+  - Understanding LLMs and RAG systems is highly valuable
+  - Interns should explore LangChain, vector databases, and embeddings
+  - Building AI-powered applications is encouraged
+
+- Productivity Tips:
+  - Use tools like GitHub Copilot, Cursor
+  - Maintain clean and readable code
+  - Document everything properly
+
+- Capstone Project Guidance:
+  - Choose impactful problem statements
+  - Focus on scalability and usability
+  - Work in teams effectively
+
+Decisions:
+- Interns must complete at least one full-stack project within 4 weeks
+- Weekly progress tracking will be implemented
+
+Next Steps:
+- Mentors to assign learning paths
+- Interns to submit weekly updates

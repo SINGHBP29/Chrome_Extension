@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Team Assistant",
+  "version": "1.0",
+  "description": "Chrome extension popup for the Team Assistant — quick actions, notifications and shortcuts.",
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Open Team Assistant"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "notifications",
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "http://localhost/*",
+    "http://0.0.0.0/*"
+  ],
+  "icons": {
+    "16": "favicon.ico",
+    "48": "favicon.ico",
+    "128": "favicon.ico"
+  }
+}
