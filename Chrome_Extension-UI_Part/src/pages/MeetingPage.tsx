@@ -7,6 +7,11 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { FilterSidebar, Meeting } from "@/components/meeting/FilterSidebar";
 import { persistedGet, persistedSet } from "@/utils/persistedState";
 import {
+  notifySearchFinished,
+  notifySearchStarted,
+  requestUiLeaveCheck,
+} from "@/utils/leaveNotifications";
+import {
   AssistantMessage,
   Message,
   TypingIndicator,
@@ -75,6 +80,16 @@ const MeetingPage = () => {
   }, []);
 
   useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState !== "hidden") return;
+      void requestUiLeaveCheck("meeting_page_hidden");
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, []);
+
+  useEffect(() => {
     if (!hydratedRef.current) return;
 
     if (persistTimeoutRef.current) clearTimeout(persistTimeoutRef.current);
@@ -123,7 +138,9 @@ const MeetingPage = () => {
 
     setIsEmployeeSearching(true);
     setEmployeeError(null);
+    void notifySearchStarted("employees", content);
 
+    let ok = false;
     try {
       const response = await fetch("http://localhost:8000/api/employees/search", {
         method: "POST",
@@ -138,11 +155,13 @@ const MeetingPage = () => {
 
       const data = await response.json();
       setEmployeeRows(Array.isArray(data.rows) ? data.rows : []);
+      ok = true;
     } catch (error) {
       console.error(error);
       setEmployeeRows(null);
       setEmployeeError(error instanceof Error ? error.message : "Employee search failed.");
     } finally {
+      void notifySearchFinished("employees", content, ok);
       setIsEmployeeSearching(false);
     }
   };
@@ -151,6 +170,7 @@ const MeetingPage = () => {
     const content = (text ?? input).trim();
     if (!content || isThinking) return;
 
+    void notifySearchStarted("meetings", content);
     const userMsg: Message = {
       id: crypto.randomUUID(),
       role: "user",
@@ -161,6 +181,7 @@ const MeetingPage = () => {
     setInput("");
     setIsThinking(true);
 
+    let ok = false;
     try {
       const response = await fetch("http://localhost:8000/api/chat", {
         method: "POST",
@@ -175,6 +196,7 @@ const MeetingPage = () => {
       }
       
       const data = await response.json();
+      ok = true;
       
       const aiMsg: Message = {
         id: crypto.randomUUID(),
@@ -207,6 +229,7 @@ const MeetingPage = () => {
       };
       setMessages((m) => [...m, errorMsg]);
     } finally {
+      void notifySearchFinished("meetings", content, ok);
       setIsThinking(false);
     }
   };
