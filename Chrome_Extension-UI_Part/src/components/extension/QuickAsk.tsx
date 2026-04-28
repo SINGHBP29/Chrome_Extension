@@ -84,7 +84,11 @@ export const QuickAsk = () => {
   const sendToBackground = (payload: unknown) => {
     try {
       if (typeof chrome === "undefined" || !chrome.runtime?.sendMessage) return;
-      chrome.runtime.sendMessage(payload);
+      chrome.runtime.sendMessage(payload, () => {
+        if (chrome.runtime?.lastError) {
+          console.warn("background message failed:", chrome.runtime.lastError.message);
+        }
+      });
     } catch {
       // ignore
     }
