@@ -1,0 +1,81 @@
+Date: Apr 20, 2026
+Title: Retrieval Demo Readiness and Evaluation Framework
+Participants: Engineering Team, HR Review Panel, Internship Mentor
+
+Summary:
+The team prepared a final demo plan to showcase retrieval quality of the meeting notes documentation system. Focus remained on query relevance, transparency, and response speed.
+
+Demo Goals:
+- Show that natural language queries return relevant meeting chunks.
+- Demonstrate source traceability using file and chunk metadata.
+- Prove retrieval works for policy, operations, and feature queries.
+
+Evaluation Queries:
+- "What was decided about Rosetta external promotion?"
+- "How long is each Zumba session?"
+- "What was said about new joiner welcome in meeting 6?"
+- "Which chrome extension features are planned first?"
+- "What are the key capstone ownership concerns?"
+
+Scoring and Ranking:
+- Use semantic similarity from vector search.
+- Add keyword and phrase overlap for reranking.
+- Filter weak results using minimum relevance threshold.
+- Prefer source-filtered retrieval when query mentions a meeting number.
+
+Risks Identified:
+- Stale vectors if ingestion is not rerun after content changes.
+- Duplicate chunks can reduce precision if deduplication is missing.
+- Very generic queries may still retrieve broad context.
+
+Decisions:
+- Rebuild collection during every ingestion run for consistency.
+- Keep interactive query mode for live demo Q&A.
+- Present top concise results with relevance percentage.
+
+Next Steps:
+- Run final ingestion on updated meeting files.
+- Execute 15+ test queries before demo.
+- Document known limitations and Phase 2 roadmap.
+Date: April 22, 2026
+Title: Technical Mentorship - RAG System Design
+Participants: Senior Engineers, Interns
+
+Summary:
+Mentorship session focused on understanding how to build a Retrieval-Augmented Generation (RAG) system step-by-step.
+
+Discussion Points:
+- RAG Pipeline:
+  - Document ingestion
+  - Chunking
+  - Embedding generation
+  - Vector storage
+  - Query retrieval
+
+- Importance of Chunking:
+  - Incorrect chunk size leads to poor retrieval
+  - Overlap helps maintain context
+  - Experimentation required
+
+- Vector Databases:
+  - ChromaDB explained in detail
+  - Stores embeddings for semantic search
+  - Faster than keyword-based search
+
+- Testing Strategy:
+  - Use real queries to validate results
+  - Evaluate relevance manually
+  - Adjust chunk size accordingly
+
+- Future Phase:
+  - Add LLM for answer generation
+  - Build chatbot interface
+
+Decisions:
+- Interns will first build retrieval-only system
+- No LLM integration in Phase 1
+
+Next Steps:
+- Implement ingestion.py
+- Implement test.py
+- Run multiple test queries

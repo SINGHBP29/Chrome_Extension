@@ -1,0 +1,82 @@
+services:
+  db:
+    image: postgres:16
+    container_name: team-assistant-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-orchestrator_db}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-orchestrator_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    ports:
+      - "${POSTGRES_HOST_PORT:-5432}:5432"
+
+  orchestrator:
+    build:
+      context: ./Chrome_Extension-orchestrator
+      dockerfile: Dockerfile
+    image: team-assistant/orchestrator:local
+    container_name: team-assistant-orchestrator
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: ${POSTGRES_DB:-orchestrator_db}
+      DB_USER: ${POSTGRES_USER:-postgres}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      PGMAINTENANCE_DB: postgres
+
+      # LLM (optional) – set at least one if you want /api/chat to work
+      GOOGLE_API_KEY: ${GOOGLE_API_KEY:-}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      LLM_REQUESTS_PER_SECOND: ${LLM_REQUESTS_PER_SECOND:-0.2}
+      LLM_MAX_RETRIES: ${LLM_MAX_RETRIES:-2}
+      LLM_TIMEOUT: ${LLM_TIMEOUT:-60}
+
+      # Optional: if set, overrides DB_* settings inside the app
+      DATABASE_URL: ${DATABASE_URL:-}
+    ports:
+      - "${ORCHESTRATOR_PORT:-8000}:8000"
+    volumes:
+      - chroma_data:/app/orchestrator/storage/chroma
+
+  notifications:
+    build:
+      context: ./notification_service
+      dockerfile: Dockerfile
+    image: team-assistant/notifications:local
+    container_name: team-assistant-notifications
+    restart: unless-stopped
+    environment:
+      NOTIFICATION_DB_PATH: /data/notifications.sqlite3
+    ports:
+      - "${NOTIFICATION_PORT:-8001}:8001"
+    volumes:
+      - notification_data:/data
+
+  ui:
+    build:
+      context: ./Chrome_Extension-UI_Part
+      dockerfile: Dockerfile
+    image: team-assistant/ui:local
+    container_name: team-assistant-ui
+    restart: unless-stopped
+    depends_on:
+      - orchestrator
+      - notifications
+    ports:
+      - "${UI_PORT:-8080}:80"
+
+volumes:
+  postgres_data:
+  chroma_data:
+  notification_data:
