@@ -5,25 +5,25 @@ from unittest.mock import patch
 
 class PackageImportTests(unittest.TestCase):
     def test_main_module_imports_as_package(self):
-        import orchestrator.main
-
-        self.assertTrue(hasattr(orchestrator.main, "graph"))
+        import orchestrator.main  # noqa: F401
 
     def test_graph_module_imports_as_package(self):
-        import orchestrator.graph
-
-        self.assertTrue(hasattr(orchestrator.graph, "graph"))
+        # The project previously had a `graph` module; today the entrypoints are `agent` and `api`.
+        import orchestrator.agent  # noqa: F401
+        import orchestrator.api  # noqa: F401
 
 
 class DbConfigTests(unittest.TestCase):
     @patch("orchestrator.utils.db.psycopg2.connect")
     def test_connection_uses_env_host_port_and_credentials(self, mock_connect):
         env = {
+            "DATABASE_URL": "",
             "DB_HOST": "db",
             "DB_PORT": "5432",
             "DB_NAME": "orchestrator_db",
             "DB_USER": "postgres",
             "DB_PASSWORD": "postgres",
+            "DB_CONNECT_TIMEOUT": "5",
         }
 
         with patch.dict(os.environ, env, clear=False):
@@ -37,6 +37,7 @@ class DbConfigTests(unittest.TestCase):
             database="orchestrator_db",
             user="postgres",
             password="postgres",
+            connect_timeout=5,
         )
 
 

@@ -3,6 +3,7 @@ import { QuickAsk } from "@/components/extension/QuickAsk";
 import { QuickActions } from "@/components/extension/QuickActions";
 import { HRMessages } from "@/components/extension/HRMessages";
 import { Notifications } from "@/components/extension/Notifications";
+import { MeetingApprovals } from "@/components/extension/MeetingApprovals";
 import { Reminders } from "@/components/extension/Reminders";
 
 const Index = () => {
@@ -16,6 +17,7 @@ const Index = () => {
           <QuickActions />
           <HRMessages />
           <Notifications />
+          <MeetingApprovals />
           <Reminders />
         </div>
       </div>

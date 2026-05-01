@@ -17,6 +17,7 @@ import {
   TypingIndicator,
   UserMessage,
 } from "@/components/meeting/ChatMessage";
+import { chatMeetings, searchEmployees, type EmployeeRow } from "@/lib/orchestratorClient";
 
 const suggestedPrompts = [
   "Summarize last week's engineering sync",
@@ -26,18 +27,6 @@ const suggestedPrompts = [
 ];
 
 const initialMessages: Message[] = [];
-
-type EmployeeRow = {
-  employee_id?: string;
-  name?: string;
-  email?: string;
-  department?: string;
-  designation?: string;
-  location?: string;
-  type?: string;
-  client?: string;
-  total_employees?: number;
-};
 
 const MeetingPage = () => {
   const navigate = useNavigate();
@@ -142,19 +131,8 @@ const MeetingPage = () => {
 
     let ok = false;
     try {
-      const response = await fetch("http://localhost:8000/api/employees/search", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query: content }),
-      });
-
-      if (!response.ok) {
-        const data = await response.json().catch(() => null);
-        throw new Error(data?.detail ?? "Employee search failed.");
-      }
-
-      const data = await response.json();
-      setEmployeeRows(Array.isArray(data.rows) ? data.rows : []);
+      const rows = await searchEmployees(content);
+      setEmployeeRows(rows);
       ok = true;
     } catch (error) {
       console.error(error);
@@ -183,19 +161,7 @@ const MeetingPage = () => {
 
     let ok = false;
     try {
-      const response = await fetch("http://localhost:8000/api/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ query: content }),
-      });
-      
-      if (!response.ok) {
-        throw new Error("Failed to fetch from API");
-      }
-      
-      const data = await response.json();
+      const responseText = await chatMeetings(content);
       ok = true;
       
       const aiMsg: Message = {
@@ -204,7 +170,7 @@ const MeetingPage = () => {
         content: "Here's what I found across your recent meetings.",
         timestamp: new Date().toISOString(),
         response: {
-          summary: data.response,
+          summary: responseText,
           highlights: [],
           people: [],
           actionItems: [],

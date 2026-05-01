@@ -10,6 +10,7 @@ import Index from "./pages/Index.tsx";
 import MeetingPage from "./pages/MeetingPage.tsx";
 import UserTimesheet from "./pages/UserTimesheet.tsx";
 import AdminTimesheet from "./pages/AdminTimesheet.tsx";
+import GoogleAuthPage from "./pages/GoogleAuthPage.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -113,6 +114,7 @@ const App = () => {
               <Route path="/meeting" element={<MeetingPage />} />
               <Route path="/timesheet/user" element={<UserTimesheet />} />
               <Route path="/timesheet/admin" element={<AdminTimesheet />} />
+              <Route path="/google-auth" element={<GoogleAuthPage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
