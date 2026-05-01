@@ -1,6 +1,19 @@
-import { Bell, Calendar, FileText, Users } from "lucide-react";
+import { Bell, Calendar, FileText, Users, type LucideIcon } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { formatDistanceToNow } from "date-fns";
+import { getUpcomingCalendarEvents, type CalendarEventPreview } from "@/google_workspace/calendarApi";
 
-const notifications = [
+type RenderItem = {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+  time: string;
+  tone: string;
+  htmlLink?: string | null;
+  hangoutLink?: string | null;
+};
+
+const notifications: RenderItem[] = [
   {
     icon: Calendar,
     title: "Standup in 15 minutes",
@@ -25,6 +38,53 @@ const notifications = [
 ];
 
 export const Notifications = () => {
+  const [events, setEvents] = useState<CalendarEventPreview[] | null>(null);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const data = await getUpcomingCalendarEvents(3);
+        setEvents(data);
+      } catch {
+        setEvents(null);
+      }
+    };
+
+    void load();
+
+    const onAuth = () => void load();
+    window.addEventListener("google-auth-changed", onAuth);
+    return () => window.removeEventListener("google-auth-changed", onAuth);
+  }, []);
+
+  const items: RenderItem[] = useMemo(() => {
+    if (!events || events.length === 0) return notifications;
+
+    const tones = [
+      "text-primary bg-primary-soft",
+      "text-[hsl(var(--warning))] bg-[hsl(var(--warning)/0.12)]",
+      "text-[hsl(var(--success))] bg-[hsl(var(--success)/0.12)]",
+    ];
+
+    return events.map((e, idx) => {
+      const start = e.start ? new Date(e.start) : null;
+      const time =
+        start && !Number.isNaN(start.getTime())
+          ? formatDistanceToNow(start, { addSuffix: true })
+          : "Upcoming";
+
+      return {
+        icon: Calendar,
+        title: (e.summary || "").trim() || "Upcoming event",
+        description: "From your Google Calendar",
+        time,
+        tone: tones[idx % tones.length],
+        htmlLink: e.htmlLink ?? null,
+        hangoutLink: e.hangoutLink ?? null,
+      };
+    });
+  }, [events]);
+
   return (
     <section className="px-4">
       <div className="mb-2 flex items-center justify-between">
@@ -37,11 +97,18 @@ export const Notifications = () => {
         </button>
       </div>
       <div className="space-y-1.5">
-        {notifications.map((n, i) => {
+        {items.map((n, i) => {
           const Icon = n.icon;
           return (
             <button
               key={i}
+              onClick={() => {
+                const url = n.hangoutLink || n.htmlLink;
+                if (!url) return;
+                const chromeAny = (globalThis as any).chrome;
+                if (chromeAny?.tabs?.create) chromeAny.tabs.create({ url });
+                else window.open(url, "_blank", "noopener,noreferrer");
+              }}
               className="flex w-full items-start gap-2.5 rounded-lg border border-transparent bg-card p-2.5 text-left shadow-soft transition-all hover:border-border hover:bg-secondary/40"
             >
               <span className={`mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg ${n.tone}`}>

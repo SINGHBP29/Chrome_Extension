@@ -14,6 +14,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "@/components/ui/use-toast";
+import { GoogleAuthSection } from "@/google_workspace/GoogleAuthSection";
+import { getGoogleAccessToken, googleApiGetJson } from "@/google_workspace/googleIdentity";
 
 export const SettingsDialog = ({ children }: { children: ReactNode }) => {
   const { theme, setTheme } = useTheme();
@@ -86,6 +88,39 @@ export const SettingsDialog = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const testGoogleGmail = async () => {
+    try {
+      const token = await getGoogleAccessToken(false);
+      const data = await googleApiGetJson<any>(
+        "https://gmail.googleapis.com/gmail/v1/users/me/messages?maxResults=1",
+        token
+      );
+      const count = Array.isArray(data?.messages) ? data.messages.length : 0;
+      toast({ title: "Gmail OK", description: `Fetched ${count} message id(s).` });
+    } catch (error) {
+      toast({
+        title: "Gmail error",
+        description: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  };
+
+  const testGoogleCalendar = async () => {
+    try {
+      const token = await getGoogleAccessToken(false);
+      const timeMin = encodeURIComponent(new Date().toISOString());
+      const url = `https://www.googleapis.com/calendar/v3/calendars/primary/events?maxResults=1&singleEvents=true&orderBy=startTime&timeMin=${timeMin}`;
+      const data = await googleApiGetJson<any>(url, token);
+      const count = Array.isArray(data?.items) ? data.items.length : 0;
+      toast({ title: "Calendar OK", description: `Fetched ${count} event(s).` });
+    } catch (error) {
+      toast({
+        title: "Calendar error",
+        description: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -134,6 +169,27 @@ export const SettingsDialog = ({ children }: { children: ReactNode }) => {
               <Button size="sm" variant="outline" onClick={sendTestNotification}>
                 Test
               </Button>
+            </div>
+          </div>
+
+          <GoogleAuthSection />
+
+          <div className="rounded-xl border border-border bg-background p-3">
+            <div className="flex items-start justify-between gap-3">
+              <div className="leading-tight">
+                <p className="text-[12px] font-semibold text-foreground">Google diagnostics</p>
+                <p className="mt-0.5 text-[11px] text-muted-foreground">
+                  Run a quick Gmail/Calendar API check.
+                </p>
+              </div>
+              <div className="flex shrink-0 gap-2">
+                <Button size="sm" variant="outline" onClick={testGoogleGmail}>
+                  Gmail
+                </Button>
+                <Button size="sm" variant="outline" onClick={testGoogleCalendar}>
+                  Calendar
+                </Button>
+              </div>
             </div>
           </div>
         </div>

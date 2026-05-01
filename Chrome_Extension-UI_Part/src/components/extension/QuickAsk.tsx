@@ -3,25 +3,13 @@ import { closeExtensionTab } from "@/utils/chromeHelper";
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { persistedGet, persistedRemove, persistedSet } from "@/utils/persistedState";
+import { searchEmployees, type EmployeeRow } from "@/lib/orchestratorClient";
 
 export const QuickAsk = () => {
   const navigate = useNavigate();
   const [value, setValue] = useState("");
   const [mode, setMode] = useState<"meetings" | "employees">("meetings");
-  const [employeeRows, setEmployeeRows] = useState<
-    | Array<{
-        employee_id?: string;
-        name?: string;
-        email?: string;
-        department?: string;
-        designation?: string;
-        location?: string;
-        type?: string;
-        client?: string;
-        total_employees?: number;
-      }>
-    | null
-  >(null);
+  const [employeeRows, setEmployeeRows] = useState<EmployeeRow[] | null>(null);
   const [employeeError, setEmployeeError] = useState<string | null>(null);
   const [isEmployeeSearching, setIsEmployeeSearching] = useState(false);
 
@@ -120,19 +108,8 @@ export const QuickAsk = () => {
     sendToBackground({ type: "SEARCH_STARTED", mode: "employees", query });
     let ok = false;
     try {
-      const response = await fetch("http://localhost:8000/api/employees/search", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query }),
-      });
-
-      if (!response.ok) {
-        const data = await response.json().catch(() => null);
-        throw new Error(data?.detail ?? "Employee search failed.");
-      }
-
-      const data = await response.json();
-      setEmployeeRows(Array.isArray(data.rows) ? data.rows : []);
+      const rows = await searchEmployees(query);
+      setEmployeeRows(rows);
       ok = true;
     } catch (error) {
       console.error(error);

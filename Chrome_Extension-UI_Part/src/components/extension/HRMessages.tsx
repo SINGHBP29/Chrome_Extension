@@ -1,8 +1,20 @@
-import { MessageSquare, Gift, HeartPulse, Clock } from "lucide-react";
+import { MessageSquare, Gift, HeartPulse, Clock, Mail, type LucideIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
+import { useEffect, useMemo, useState } from "react";
+import { formatDistanceToNow } from "date-fns";
+import { getRecentGmailMessages, type GmailMessagePreview } from "@/google_workspace/gmailApi";
 
-const messages = [
+type RenderItem = {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+  time: string;
+  tone: string;
+  threadId?: string | null;
+};
+
+const messages: RenderItem[] = [
   {
     icon: Gift,
     title: "Annual bonus letter",
@@ -29,6 +41,54 @@ const messages = [
 export const HRMessages = () => {
   const navigate = useNavigate();
   const { userRole } = useAuth();
+  const [gmailMessages, setGmailMessages] = useState<GmailMessagePreview[] | null>(null);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const data = await getRecentGmailMessages(3);
+        setGmailMessages(data);
+      } catch {
+        setGmailMessages(null);
+      }
+    };
+
+    void load();
+
+    const onAuth = () => void load();
+    window.addEventListener("google-auth-changed", onAuth);
+    return () => window.removeEventListener("google-auth-changed", onAuth);
+  }, []);
+
+  const items: RenderItem[] = useMemo(() => {
+    if (!gmailMessages || gmailMessages.length === 0) return messages;
+
+    const tones = [
+      "text-primary bg-primary-soft",
+      "text-[hsl(var(--success))] bg-[hsl(var(--success)/0.12)]",
+      "text-[hsl(var(--warning))] bg-[hsl(var(--warning)/0.15)]",
+    ];
+
+    return gmailMessages.map((m, idx) => {
+      const subject = (m.subject || "").trim() || "New message";
+      const from = (m.from || "").trim() || "Gmail";
+      const dateVal = m.date ? new Date(m.date) : null;
+      const time =
+        dateVal && !Number.isNaN(dateVal.getTime())
+          ? `${formatDistanceToNow(dateVal, { addSuffix: true })}`
+          : "Recently";
+
+      return {
+        icon: Mail,
+        title: subject,
+        description: from,
+        time,
+        tone: tones[idx % tones.length],
+        threadId: m.threadId ?? null,
+      };
+    });
+  }, [gmailMessages]);
+
   return (
     <section className="px-4">
       <div className="mb-2 flex items-center justify-between">
@@ -41,18 +101,22 @@ export const HRMessages = () => {
         </button>
       </div>
       <div className="space-y-1.5">
-        {messages.map((m, i) => {
+        {items.map((m, i) => {
           const Icon = m.icon;
           return (
             <button
               key={i}
               onClick={() => {
                 if (m.title === "Submit Timesheet") {
-                  if (userRole === "user") {
-                    navigate("/timesheet/user");
-                  } else {
-                    navigate("/timesheet/admin");
-                  }
+                  navigate(userRole === "user" ? "/timesheet/user" : "/timesheet/admin");
+                  return;
+                }
+
+                if (m.threadId) {
+                  const url = `https://mail.google.com/mail/u/0/#all/${m.threadId}`;
+                  const chromeAny = (globalThis as any).chrome;
+                  if (chromeAny?.tabs?.create) chromeAny.tabs.create({ url });
+                  else window.open(url, "_blank", "noopener,noreferrer");
                 }
               }}
               className="flex w-full items-start gap-2.5 rounded-lg border border-transparent bg-card p-2.5 text-left shadow-soft transition-all hover:border-border hover:bg-secondary/40"
